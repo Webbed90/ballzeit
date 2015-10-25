@@ -125,6 +125,12 @@ public class Photo extends DataObject {
 	/**
 	 *
 	 */
+	
+	public Coordinate location;
+	
+	/**
+	 * 
+	 */
 	//TODO: change it to a single long
 	@Id
 	Long idLong;
@@ -303,6 +309,23 @@ public class Photo extends DataObject {
 		maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
 
 		incWriteCount();
+	}
+	
+	/**
+	 * @methodtype get
+	 */
+	
+	public Coordinate getLocation() {
+		return this.location;
+	}
+	
+	/**
+	 * @methodtype set
+	 */
+	
+	public void setLocation(double longitude, double latitude) {
+		this.location.setLatitude(latitude);
+		this.location.setLongitude(longitude);
 	}
 
 	/**
