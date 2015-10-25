@@ -21,6 +21,8 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.services.DataObject;
+
 
 /**
  * Created by Michael Weber on 24.10.2015
@@ -28,7 +30,7 @@ package org.wahlzeit.model;
  * A class that assigns coordinates 
 (defined as longitude and latitude) to a photo **/
 
-public class Coordinate {
+public class Coordinate extends DataObject {
 	
 	//Attributes
 	private double latitude;
@@ -120,7 +122,7 @@ public class Coordinate {
 	public void latitudeValidityChecker (double latitude)
 	{
 		if(latitude > 90 || latitude < -90) {
-			throw new IllegalArgumentException ("There are no Latitudes higher than 180");
+			throw new IllegalArgumentException ("There are no Latitudes higher than 180.");
 		}
 	}
 	
@@ -130,7 +132,7 @@ public class Coordinate {
 	
 	public void longitudeValidityChecker (double longitude){
 		if(longitude >=180 || longitude < -180) {
-			throw new IllegalArgumentException ("THere are no Longitudes higher than 90");
+			throw new IllegalArgumentException ("THere are no Longitudes higher than 90.");
 		}
 		
 	}

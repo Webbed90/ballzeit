@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
+ *
+ * This file is part of the Wahlzeit photo rating application.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
+
 package org.wahlzeit.model;
 
 import static org.junit.Assert.*;
@@ -10,7 +31,10 @@ import junit.framework.Assert;
 
 public class CoordinateTest {
 	
-/**Test class for Coordinates **/
+/**
+ * Created by Michael Weber on 24.10.2015.
+ * 
+ * A jUnit Test Class to test the Coordinates.java class.**/
 	
 	//real coordinates of real places for testing
 	Coordinate nuernberg;
@@ -52,55 +76,55 @@ public class CoordinateTest {
 
 	@Test //Test for Longitudinal Distance From lat+, long + to 0,0
 	public void testGetLongitudinalDistancePositiveToZero() {
-		assertEquals("LongDistance from Nbg to 0,0", longNuernbergToSomePlace, 
+		assertEquals("LongDistance from Nbg to 0,0.", longNuernbergToSomePlace, 
 				      nuernberg.getLongitudinalDistance(somePlaceInTheGulfOfGuinea), DELTA);
 	}
 	
 	@Test //Test for Longitudinal Distance from long+, to long- (via the 0 Meridian)
 	public void testgetLongitudinalDistancePostiveToNegative() {
-		assertEquals("LongDistance from Nbg to Ushuaia", longNuernbergToUshuaia,
+		assertEquals("LongDistance from Nbg to Ushuaia.", longNuernbergToUshuaia,
 				     nuernberg.getLongitudinalDistance(ushuaia), DELTA);
 	}
 	
 	@Test //Test for Longitudinal Distance from long- to long+ (via the Pacific Ocean)
 	public void testgetLongitudinalDistanceViaPacific() {
-		assertEquals("LongDistance from Melbourne to Ushuaia via the Pacific", longMelbourneToUshuaia, 
+		assertEquals("LongDistance from Melbourne to Ushuaia via the Pacific.", longMelbourneToUshuaia, 
 				     melbourne.getLongitudinalDistance(ushuaia), DELTA);
 	}
 
 	@Test //Test for Latitudinal Distance from lat+ to 0
 	public void testGetLatitudinalDistancePositiveToZero() {
-		assertEquals("LatDistance from Nbg to 0,0", latNuernbergToSomePlace, 
+		assertEquals("LatDistance from Nbg to 0,0.", latNuernbergToSomePlace, 
 				     nuernberg.getLatitudinalDistance(somePlaceInTheGulfOfGuinea), DELTA);
 	}
 	
 	@Test //Test for Latitudinal Distance from lat+ to lat-
 	public void testgetLatitudinalDistancePostiveToNegative() {
-		assertEquals("LatDistance from Nbg to Ushuaia", latNuernbergToUshuaia,
+		assertEquals("LatDistance from Nbg to Ushuaia.", latNuernbergToUshuaia,
 				     nuernberg.getLatitudinalDistance(ushuaia), DELTA);
 	}
 	
 	@Test //Test for Latitudinal Distance from lat- to 0;
 	public void testGetLatitudinalDistnaceNetgativeToZero() {
-		assertEquals("LatDistnace from Ushuaia to Some Place in the Gulf of Guinea", latUshuaiaToSomePlace, 
+		assertEquals("LatDistnace from Ushuaia to Some Place in the Gulf of Guinea.", latUshuaiaToSomePlace, 
 				     ushuaia.getLatitudinalDistance(somePlaceInTheGulfOfGuinea), DELTA);
 	}
 	
 	@Test //Test for The Distance From Nürnberg to a Point with the Coordinates 0,0 in the Gulf of Guinea.
 	public void testGetDistanceNbgToZero() {
-		assertEquals("Overall Distance from Nuernberg to Some Place in the Gulf of Guinea", distNuernbergToSomePlace,
+		assertEquals("Overall Distance from Nuernberg to Some Place in the Gulf of Guinea.", distNuernbergToSomePlace,
 				      nuernberg.getDistance(somePlaceInTheGulfOfGuinea), DELTA);
 	}
 	
 	@Test //Tests the Distance From Ushuaia to Melbourne (via the Pacific).
 	public void testGetDistanceUshuaiaToMelbourne() {
-		assertEquals("Overall Distance from Ushuaia to Melbourne via the Pacific", distUshuaiaToMelbourne,
+		assertEquals("Overall Distance from Ushuaia to Melbourne via the Pacific.", distUshuaiaToMelbourne,
 					 ushuaia.getDistance(melbourne), DELTA);
 	}
 	
 	@Test //Asserts Reversibility
 	public void testReversibility() {
-		assertEquals("The distance from one place to the other should be the same as back", ushuaia.getDistance(melbourne),
+		assertEquals("The distance from one place to the other should be the same as back.", ushuaia.getDistance(melbourne),
 				     melbourne.getDistance(ushuaia), DELTA);
 		
 	}
