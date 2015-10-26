@@ -129,16 +129,16 @@ public class CoordinateTest {
 		
 	}
 	
-//	@Test (expected = IllegalArgumentException.class)
-//	public void testValidityChecker() throws Exception {
-//		try {
-//			nuernberg.setLatitude(-200);
-//			fail();
-//		}
-//		catch (IllegalArgumentException e) {
-//			// Impossible coordinates should throw an IllegalArgumentException
-//		}
-//	}
+	@Test (expected = IllegalArgumentException.class)
+	public void testValidityCheckerLatitude() throws Exception {
+			nuernberg.setLatitude(-200);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testValidityCheckerLongitude() throws Exception {
+			nuernberg.setLongitude(-200);
+			fail();
+	}
 
 
 
