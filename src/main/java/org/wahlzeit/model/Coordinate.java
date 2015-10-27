@@ -105,14 +105,28 @@ public class Coordinate extends DataObject {
 	/**
 	 * Method that calculates the distance from longitudinal and latitudinal values.
 	 */
+	public Coordinate getsimpleDistance (Coordinate coordinate) {
+		
+		Coordinate result = new Coordinate(this.getLatitudinalDistance(coordinate), 
+										   this.getLongitudinalDistance(coordinate));		
+		return result;
+	}
+	
+	/**
+	 * A method that calculates the distance from longitude and latitude in meters
+	 * @methodtype
+	 * @methodproperties 
+	 */
+	
 	public double getDistance (Coordinate coordinate) {
+		double radLatitudeThisPosition = asRadiant(this.latitude);
+		double radLongitudeThisPosition = asRadiant(this.longitude);
+		double radLatitudeOtherPosition = asRadiant(coordinate.getLatitude());
+		double radLongitudeOtherPosition = asRadiant(coordinate.getLongitude());
 		
-		double distance;
-		
-		distance = Math.sqrt(Math.pow(this.getLatitudinalDistance(coordinate), 2) +
-				   Math.pow(this.getLongitudinalDistance(coordinate), 2));
-		
-		return distance;
+		return Math.acos(Math.sin(radLatitudeThisPosition)*Math.sin(radLatitudeOtherPosition) + 
+						 Math.cos(radLatitudeThisPosition)*Math.cos(radLatitudeOtherPosition) *
+						 Math.cos(radLongitudeOtherPosition-radLongitudeThisPosition))*6371;
 	}
 	
 	/**
@@ -135,6 +149,10 @@ public class Coordinate extends DataObject {
 			throw new IllegalArgumentException ("THere are no Longitudes higher than 90.");
 		}
 		
+	}
+	
+	public double asRadiant (double decimalNumber) {
+		return Math.PI*decimalNumber/180;
 	}
 
 }

@@ -44,7 +44,9 @@ public class CoordinateTest {
 	
 	// Allowed Delta for Double Rounding Errors
 	
-	public static final double DELTA = 0.001;
+	public static final double DELTA = 0.01;
+	public static final double DELTARAD = 2;
+
 	
 	//Expected Results
 	
@@ -57,6 +59,9 @@ public class CoordinateTest {
 	
 	double distNuernbergToSomePlace = 50.677388;
 	double distUshuaiaToMelbourne = 147.71386;
+	
+	double distNuernbergToUshuaia = 13732;
+	double distNuernbergToZero = 5601;
 	
 
 
@@ -110,17 +115,17 @@ public class CoordinateTest {
 				     ushuaia.getLatitudinalDistance(somePlaceInTheGulfOfGuinea), DELTA);
 	}
 	
-	@Test //Test for The Distance From Nürnberg to a Point with the Coordinates 0,0 in the Gulf of Guinea.
-	public void testGetDistanceNbgToZero() {
-		assertEquals("Overall Distance from Nuernberg to Some Place in the Gulf of Guinea.", distNuernbergToSomePlace,
-				      nuernberg.getDistance(somePlaceInTheGulfOfGuinea), DELTA);
-	}
-	
-	@Test //Tests the Distance From Ushuaia to Melbourne (via the Pacific).
-	public void testGetDistanceUshuaiaToMelbourne() {
-		assertEquals("Overall Distance from Ushuaia to Melbourne via the Pacific.", distUshuaiaToMelbourne,
-					 ushuaia.getDistance(melbourne), DELTA);
-	}
+//	@Test //Test for The Distance From Nürnberg to a Point with the Coordinates 0,0 in the Gulf of Guinea.
+//	public void testGetDistanceNbgToZero() {
+//		assertEquals("Overall Distance from Nuernberg to Some Place in the Gulf of Guinea.", distNuernbergToSomePlace,
+//				      nuernberg.getDistance(somePlaceInTheGulfOfGuinea), DELTA);
+//	}
+//	
+//	@Test //Tests the Distance From Ushuaia to Melbourne (via the Pacific).
+//	public void testGetDistanceUshuaiaToMelbourne() {
+//		assertEquals("Overall Distance from Ushuaia to Melbourne via the Pacific.", distUshuaiaToMelbourne,
+//					 ushuaia.getDistance(melbourne), DELTA);
+//	}
 	
 	@Test //Asserts Reversibility
 	public void testReversibility() {
@@ -132,12 +137,19 @@ public class CoordinateTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void testValidityCheckerLatitude() throws Exception {
 			nuernberg.setLatitude(-200);
+			fail();
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testValidityCheckerLongitude() throws Exception {
 			nuernberg.setLongitude(-200);
 			fail();
+	}
+	
+	@Test //Test for Distance in Meters
+	public void testGetDistance () {
+		assertEquals(distNuernbergToUshuaia, nuernberg.getDistance(ushuaia), DELTARAD);
+		assertEquals(distNuernbergToZero, nuernberg.getDistance(somePlaceInTheGulfOfGuinea), DELTARAD);
 	}
 
 
