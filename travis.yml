@@ -1,4 +1,0 @@
-language: java
-java:
-- 1.7
-script: ./gradlew appengineRun

@@ -27,9 +27,9 @@ import java.util.logging.Logger;
 /**
  * An Abstract Factory for creating photos and related objects.
  */
-public class PhotoFactory {
+public abstract class PhotoFactory {
 
-	private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());
+	protected static final Logger log = Logger.getLogger(PhotoFactory.class.getName());
 	/**
 	 * Hidden singleton instance; needs to be initialized from the outside.
 	 */
@@ -53,12 +53,7 @@ public class PhotoFactory {
 	 * Public singleton access method.
 	 */
 	public static synchronized PhotoFactory getInstance() {
-		if (instance == null) {
-			log.config(LogBuilder.createSystemMessage().addAction("setting generic PhotoFactory").toString());
-			setInstance(new PhotoFactory());
-		}
-
-		return instance;
+		return FootballPhotoFactory.getInstance();
 	}
 
 	/**
@@ -78,6 +73,7 @@ public class PhotoFactory {
 	public Photo createPhoto() {
 		return new Photo();
 	}
+	
 
 	/**
 	 * Creates a new photo with the specified id
@@ -91,14 +87,14 @@ public class PhotoFactory {
 	 * Google Cloud storage.
 	 */
 	public Photo loadPhoto(PhotoId id) {
-	   /* Photo result =
+	   /*Photo result =
                 OfyService.ofy().load().type(Photo.class).ancestor(KeyFactory.createKey("Application", "Wahlzeit")).filter(Photo.ID, id).first().now();
         for (PhotoSize size : PhotoSize.values()) {
             GcsFilename gcsFilename = new GcsFilename("picturebucket", filename);
 
 
 
-        }*/
+        } */
 		return null;
 	}
 

@@ -32,6 +32,10 @@ import org.wahlzeit.services.DataObject;
 
 public class Coordinate extends DataObject {
 	
+	/**
+	 * 
+	 */
+	
 	//Attributes
 	private double latitude;
 	private double longitude;
