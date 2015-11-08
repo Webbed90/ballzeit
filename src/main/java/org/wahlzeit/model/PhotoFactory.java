@@ -53,7 +53,12 @@ public abstract class PhotoFactory {
 	 * Public singleton access method.
 	 */
 	public static synchronized PhotoFactory getInstance() {
-		return FootballPhotoFactory.getInstance();
+		
+		if (instance == null) {
+			log.config(LogBuilder.createSystemMessage().addAction("Setting FootballPhotoFactory").toString());
+			setInstance(new FootballPhotoFactory());
+		}
+		return instance;
 	}
 
 	/**

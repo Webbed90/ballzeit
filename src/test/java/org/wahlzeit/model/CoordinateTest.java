@@ -37,14 +37,21 @@ public class CoordinateTest {
  * A jUnit Test Class to test the Coordinates.java class.**/
 	
 	//real coordinates of real places for testing
-	Coordinate nuernberg;
-	Coordinate somePlaceInTheGulfOfGuinea;
-	Coordinate melbourne;
-	Coordinate ushuaia;
+	Coordinate sphericNuernberg;
+	Coordinate sphericPlaceInTheGulfOfGuinea;
+	Coordinate sphericMelbourne;
+	Coordinate sphericUshuaia;
+	
+	Coordinate cartesianNuernberg;
+	Coordinate cartesianPlaceInTheGulfOfGuinea;
+	Coordinate cartesianMelbourne;
+	Coordinate cartesianUshuaia;
+	
+	Coordinate sphericSomePlaceOnMars;
 	
 	// Allowed Delta for Double Rounding Errors
 	
-	public static final double DELTA = 0.01;
+	public static final double DELTA = 2;
 	public static final double DELTARAD = 2;
 
 	
@@ -68,90 +75,55 @@ public class CoordinateTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		nuernberg 		= new Coordinate (49.452030, 11.076750);	// lat+ , long+
-		melbourne 		= new Coordinate (-37.814107, 144.963280);		// lat- , long+	
-		ushuaia			= new Coordinate (-54.801912, -68.302951); 	// lat- , long-
-		somePlaceInTheGulfOfGuinea = new Coordinate(0,0); 			// lat0 , long0
+		sphericNuernberg		= Location.createCoordinate(49.452030, 11.076750, 6371, true);
+		sphericMelbourne		= Location.createCoordinate(-37.814107, 144.963280, 6371, true);
+		sphericUshuaia			= Location.createCoordinate(-54.801912, -68.302951, 6371, true);
+		sphericPlaceInTheGulfOfGuinea = Location.createCoordinate(0, 0, 6371, true);	
 		
+		cartesianNuernberg		         = Location.createCoordinate(4064.531363, 795.716658 ,4841.080540, false);
+		cartesianMelbourne		         = Location.createCoordinate(-4121.036265, 2889.518447 ,-3906.070178, false);
+		cartesianUshuaia			     = Location.createCoordinate(1357.636610, -3412.101688,-5206.152696, false);
+		cartesianPlaceInTheGulfOfGuinea  = Location.createCoordinate(6371, 0 ,0, false);	
+		
+		sphericSomePlaceOnMars = Location.createCoordinate(0, 0, 3369.6, true);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
-
-	@Test //Test for Longitudinal Distance From lat+, long + to 0,0
-	public void testGetLongitudinalDistancePositiveToZero() {
-		assertEquals("LongDistance from Nbg to 0,0.", longNuernbergToSomePlace, 
-				      nuernberg.getLongitudinalDistance(somePlaceInTheGulfOfGuinea), DELTA);
+	
+	@Test
+	public void testGetDistance() {
+		//Tests with only SphericCoordinates
+		assertEquals(sphericNuernberg.getDistance(sphericNuernberg),0,DELTA);
+		assertEquals(sphericNuernberg.getDistance(sphericUshuaia), distNuernbergToUshuaia, DELTA);
+		assertEquals(sphericNuernberg.getDistance(sphericPlaceInTheGulfOfGuinea), distNuernbergToZero, DELTA);
+		//Tests with only CartesianCoordinates
+		assertEquals(cartesianNuernberg.getDistance(cartesianNuernberg),0,DELTA);
+		assertEquals(cartesianNuernberg.getDistance(cartesianUshuaia), distNuernbergToUshuaia, DELTA);
+		assertEquals(cartesianNuernberg.getDistance(cartesianPlaceInTheGulfOfGuinea), distNuernbergToZero, DELTA);
+		//Tests between Cartesian and Spheric Coordinates
+		assertEquals(sphericNuernberg.getDistance(cartesianNuernberg),0,DELTA);
+		assertEquals(sphericNuernberg.getDistance(cartesianUshuaia),distNuernbergToUshuaia,DELTA);
+		assertEquals(sphericNuernberg.getDistance(cartesianPlaceInTheGulfOfGuinea), distNuernbergToZero,DELTA);
+		assertEquals(cartesianNuernberg.getDistance(sphericUshuaia),distNuernbergToUshuaia,DELTA);
+		assertEquals(cartesianNuernberg.getDistance(sphericPlaceInTheGulfOfGuinea), distNuernbergToZero, DELTA);		
 	}
 	
-	@Test //Test for Longitudinal Distance from long+, to long- (via the 0 Meridian)
-	public void testgetLongitudinalDistancePostiveToNegative() {
-		assertEquals("LongDistance from Nbg to Ushuaia.", longNuernbergToUshuaia,
-				     nuernberg.getLongitudinalDistance(ushuaia), DELTA);
-	}
-	
-	@Test //Test for Longitudinal Distance from long- to long+ (via the Pacific Ocean)
-	public void testgetLongitudinalDistanceViaPacific() {
-		assertEquals("LongDistance from Melbourne to Ushuaia via the Pacific.", longMelbourneToUshuaia, 
-				     melbourne.getLongitudinalDistance(ushuaia), DELTA);
-	}
-
-	@Test //Test for Latitudinal Distance from lat+ to 0
-	public void testGetLatitudinalDistancePositiveToZero() {
-		assertEquals("LatDistance from Nbg to 0,0.", latNuernbergToSomePlace, 
-				     nuernberg.getLatitudinalDistance(somePlaceInTheGulfOfGuinea), DELTA);
-	}
-	
-	@Test //Test for Latitudinal Distance from lat+ to lat-
-	public void testgetLatitudinalDistancePostiveToNegative() {
-		assertEquals("LatDistance from Nbg to Ushuaia.", latNuernbergToUshuaia,
-				     nuernberg.getLatitudinalDistance(ushuaia), DELTA);
-	}
-	
-	@Test //Test for Latitudinal Distance from lat- to 0;
-	public void testGetLatitudinalDistnaceNetgativeToZero() {
-		assertEquals("LatDistnace from Ushuaia to Some Place in the Gulf of Guinea.", latUshuaiaToSomePlace, 
-				     ushuaia.getLatitudinalDistance(somePlaceInTheGulfOfGuinea), DELTA);
-	}
-	
-//	@Test //Test for The Distance From Nürnberg to a Point with the Coordinates 0,0 in the Gulf of Guinea.
-//	public void testGetDistanceNbgToZero() {
-//		assertEquals("Overall Distance from Nuernberg to Some Place in the Gulf of Guinea.", distNuernbergToSomePlace,
-//				      nuernberg.getDistance(somePlaceInTheGulfOfGuinea), DELTA);
-//	}
-//	
-//	@Test //Tests the Distance From Ushuaia to Melbourne (via the Pacific).
-//	public void testGetDistanceUshuaiaToMelbourne() {
-//		assertEquals("Overall Distance from Ushuaia to Melbourne via the Pacific.", distUshuaiaToMelbourne,
-//					 ushuaia.getDistance(melbourne), DELTA);
-//	}
-	
-	@Test //Asserts Reversibility
-	public void testReversibility() {
-		assertEquals("The distance from one place to the other should be the same as back.", ushuaia.getDistance(melbourne),
-				     melbourne.getDistance(ushuaia), DELTA);
-		
+	@Test
+	public void testIsEqual() {
+		assertTrue(sphericNuernberg.isEqual(sphericNuernberg));
+		assertTrue(sphericNuernberg.isEqual(cartesianNuernberg));
+		assertTrue(cartesianUshuaia.isEqual(sphericUshuaia));
+		assertTrue(cartesianMelbourne.isEqual(sphericMelbourne));
+		assertFalse(sphericNuernberg.isEqual(sphericMelbourne));	
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void testValidityCheckerLatitude() throws Exception {
-			nuernberg.setLatitude(-200);
-			fail();
+	public void TestDifferentPlanetsException() {
+		sphericNuernberg.getDistance(sphericSomePlaceOnMars);
+		sphericSomePlaceOnMars.getDistance(sphericNuernberg);
 	}
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void testValidityCheckerLongitude() throws Exception {
-			nuernberg.setLongitude(-200);
-			fail();
-	}
 	
-	@Test //Test for Distance in Meters
-	public void testGetDistance () {
-		assertEquals(distNuernbergToUshuaia, nuernberg.getDistance(ushuaia), DELTARAD);
-		assertEquals(distNuernbergToZero, nuernberg.getDistance(somePlaceInTheGulfOfGuinea), DELTARAD);
-	}
-
-
-
 }

@@ -39,14 +39,11 @@ public class Location {
 		return this.coordinates;
 	}
 	
-	/**
-	 * @methodtype set
-	 * @methodproperty primitive
-	 */
-	
-	public void setCoordinate(double latitude, double longitude) {
-		this.coordinates.setLatitude(latitude);
-		this.coordinates.setLongitude(longitude);
+	public static Coordinate createCoordinate (double latOrX, double longOrY, double radOrZ, boolean isSpheric) {
+		if (isSpheric) {
+			return new SphericCoordinate (latOrX,longOrY,radOrZ);
+		}
+			return new CartesianCoordinate (latOrX, longOrY, radOrZ);
 	}
 	
 	

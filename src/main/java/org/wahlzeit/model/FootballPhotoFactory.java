@@ -13,7 +13,7 @@ public class FootballPhotoFactory extends PhotoFactory {
 	/**
 	 * @methodtype constructor
 	 */
-	private FootballPhotoFactory() {
+	public FootballPhotoFactory() {
 		// nothing to do here ;)
 	}
 
@@ -64,8 +64,8 @@ public class FootballPhotoFactory extends PhotoFactory {
 	/**
 	 * @methodtype factory
 	 */
-	public FootballPhoto createFootballPhoto(PhotoId id, double latitude, double longitude) {
-		return new FootballPhoto(id, latitude, longitude);
+	public FootballPhoto createFootballPhoto(PhotoId id, Location location) {
+		return new FootballPhoto(id, location);
 	}
 	
 	/**

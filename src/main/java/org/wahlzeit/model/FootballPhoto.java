@@ -28,9 +28,9 @@ public class FootballPhoto extends Photo {
 		super(id);
 	}
 	
-	public FootballPhoto (PhotoId id, double latitude, double longitude) {
+	public FootballPhoto (PhotoId id, Location location) {
 		this.id = id;
-		this.location.setCoordinate(latitude, longitude);
+		this.location = location;
 	}
 	
 	/**
