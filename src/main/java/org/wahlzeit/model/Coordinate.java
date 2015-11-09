@@ -36,5 +36,11 @@ interface Coordinate {
 	public double getDistance(Coordinate coordinate);
 	public boolean isEqual(Coordinate coordinate);
 	
+	public double getLongitude();
+	public double getLatitude();
+	public double getRadius();
+	
+	SphericCoordinate getCoordinate();
+	
 
 }

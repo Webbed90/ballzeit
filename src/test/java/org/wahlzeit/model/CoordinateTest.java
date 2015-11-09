@@ -37,23 +37,21 @@ public class CoordinateTest {
  * A jUnit Test Class to test the Coordinates.java class.**/
 	
 	//real coordinates of real places for testing
-	Coordinate sphericNuernberg;
-	Coordinate sphericPlaceInTheGulfOfGuinea;
-	Coordinate sphericMelbourne;
-	Coordinate sphericUshuaia;
+	Coordinate sphericNuernberg;				//Latitude positive, Longitude positive, spheric
+	Coordinate sphericPlaceInTheGulfOfGuinea;   //Latitude zero    , Longitude zero,     spheric
+	Coordinate sphericMelbourne;				//Latitude negative, Longitude positive, spheric
+	Coordinate sphericUshuaia;					//Latitude negative, Longitude negative, spheric
 	
-	Coordinate cartesianNuernberg;
-	Coordinate cartesianPlaceInTheGulfOfGuinea;
-	Coordinate cartesianMelbourne;
-	Coordinate cartesianUshuaia;
+	Coordinate cartesianNuernberg;				//Latitude positive, Longitude positive, cartesian
+	Coordinate cartesianPlaceInTheGulfOfGuinea; //Latitude zero    , Longitude zero,     cartesian 
+	Coordinate cartesianMelbourne;				//Latitude negative, Longitude positive, cartesian
+	Coordinate cartesianUshuaia;				//Latitude negative, Longitude negative, cartesian
 	
 	Coordinate sphericSomePlaceOnMars;
 	
 	// Allowed Delta for Double Rounding Errors
 	
 	public static final double DELTA = 2;
-	public static final double DELTARAD = 2;
-
 	
 	//Expected Results
 	
@@ -75,21 +73,17 @@ public class CoordinateTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		sphericNuernberg		= Location.createCoordinate(49.452030, 11.076750, 6371, true);
-		sphericMelbourne		= Location.createCoordinate(-37.814107, 144.963280, 6371, true);
-		sphericUshuaia			= Location.createCoordinate(-54.801912, -68.302951, 6371, true);
-		sphericPlaceInTheGulfOfGuinea = Location.createCoordinate(0, 0, 6371, true);	
+		sphericNuernberg			     = Location.createCoordinate(49.452030, 11.076750, 6371, true);
+		sphericMelbourne				 = Location.createCoordinate(-37.814107, 144.963280, 6371, true);
+		sphericUshuaia					 = Location.createCoordinate(-54.801912, -68.302951, 6371, true);
+		sphericPlaceInTheGulfOfGuinea 	 = Location.createCoordinate(0, 0, 6371, true);	
 		
 		cartesianNuernberg		         = Location.createCoordinate(4064.531363, 795.716658 ,4841.080540, false);
 		cartesianMelbourne		         = Location.createCoordinate(-4121.036265, 2889.518447 ,-3906.070178, false);
 		cartesianUshuaia			     = Location.createCoordinate(1357.636610, -3412.101688,-5206.152696, false);
 		cartesianPlaceInTheGulfOfGuinea  = Location.createCoordinate(6371, 0 ,0, false);	
 		
-		sphericSomePlaceOnMars = Location.createCoordinate(0, 0, 3369.6, true);
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		sphericSomePlaceOnMars 			 = Location.createCoordinate(0, 0, 3369.6, true);
 	}
 	
 	@Test
@@ -98,10 +92,12 @@ public class CoordinateTest {
 		assertEquals(sphericNuernberg.getDistance(sphericNuernberg),0,DELTA);
 		assertEquals(sphericNuernberg.getDistance(sphericUshuaia), distNuernbergToUshuaia, DELTA);
 		assertEquals(sphericNuernberg.getDistance(sphericPlaceInTheGulfOfGuinea), distNuernbergToZero, DELTA);
+		
 		//Tests with only CartesianCoordinates
 		assertEquals(cartesianNuernberg.getDistance(cartesianNuernberg),0,DELTA);
 		assertEquals(cartesianNuernberg.getDistance(cartesianUshuaia), distNuernbergToUshuaia, DELTA);
 		assertEquals(cartesianNuernberg.getDistance(cartesianPlaceInTheGulfOfGuinea), distNuernbergToZero, DELTA);
+		
 		//Tests between Cartesian and Spheric Coordinates
 		assertEquals(sphericNuernberg.getDistance(cartesianNuernberg),0,DELTA);
 		assertEquals(sphericNuernberg.getDistance(cartesianUshuaia),distNuernbergToUshuaia,DELTA);
@@ -116,7 +112,10 @@ public class CoordinateTest {
 		assertTrue(sphericNuernberg.isEqual(cartesianNuernberg));
 		assertTrue(cartesianUshuaia.isEqual(sphericUshuaia));
 		assertTrue(cartesianMelbourne.isEqual(sphericMelbourne));
-		assertFalse(sphericNuernberg.isEqual(sphericMelbourne));	
+		assertFalse(sphericNuernberg.isEqual(sphericMelbourne));
+		assertFalse(sphericNuernberg.isEqual(sphericUshuaia));
+		assertFalse(sphericNuernberg.isEqual(cartesianPlaceInTheGulfOfGuinea));
+		assertFalse(sphericUshuaia.isEqual(cartesianMelbourne));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)

@@ -1,6 +1,6 @@
 package org.wahlzeit.model;
 
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
 	
 	//Attributes
 	private double latitude;
@@ -51,6 +51,10 @@ public class SphericCoordinate implements Coordinate {
 		this.longitude = longitude;
 	}
 	
+	public SphericCoordinate getCoordinate() {
+		return this;
+	}
+	
 	//Methods
 	
 	/**
@@ -91,12 +95,6 @@ public class SphericCoordinate implements Coordinate {
 	 * 
 	 */
 	
-	public double getDistance (Coordinate coordinate) {
-		if (coordinate instanceof SphericCoordinate) {
-			 return doGetDistance((SphericCoordinate) coordinate);
-		}
-		return doGetDistance((CartesianCoordinate) coordinate);		
-	}
 	
 	/**
 	 * A method that calculates the distance from longitude and latitude in meters
@@ -118,11 +116,6 @@ public class SphericCoordinate implements Coordinate {
 		return Math.acos(Math.sin(radLatitudeThisPosition)*Math.sin(radLatitudeOtherPosition) + 
 						 Math.cos(radLatitudeThisPosition)*Math.cos(radLatitudeOtherPosition) *
 						 Math.cos(radLongitudeOtherPosition-radLongitudeThisPosition))*radius;
-	}
-	
-	public double doGetDistance (CartesianCoordinate cCoordinate) {
-		SphericCoordinate sCoord = CartesianCoordinate.convertCartesianToSpheric(cCoordinate);
-		return doGetDistance(sCoord);
 	}
 	
 	/**

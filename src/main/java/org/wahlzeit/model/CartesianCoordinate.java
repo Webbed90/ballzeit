@@ -1,6 +1,6 @@
 package org.wahlzeit.model;
 
-public class CartesianCoordinate implements Coordinate{
+public class CartesianCoordinate extends AbstractCoordinate {
 	private double x;
 	private double y;
 	private double z;
@@ -62,38 +62,24 @@ public class CartesianCoordinate implements Coordinate{
 		this.z = z;
 	}
 	
-	
-	/**
-	 * @methodtype get
-	 * @methodproperty composed
-	 */
-	
-	public double getDistance (Coordinate coordinate) {
-		//TO-DO
-		if(coordinate instanceof CartesianCoordinate) {
-			return doGetDistance((CartesianCoordinate) coordinate);
-		}
-			return doGetDistance((SphericCoordinate) coordinate);
+	public SphericCoordinate getCoordinate() {
+		return this.convertCartesianToSpheric();
 	}
 	
-	/**
-	 * 
-	 * @methodtyper get
-	 * @methodproperty primitive
-	 */
-	public double doGetDistance (CartesianCoordinate cCoordinate) {
-		return convertCartesianToSpheric(this).doGetDistance(convertCartesianToSpheric(cCoordinate));
+	public double getLatitude() {
+		return this.convertCartesianToSpheric().getLatitude();
 	}
 	
-	/**
-	 * 
-	 * @methodtyper get
-	 * @methodproperty primitive
-	 */
-	
-	public double doGetDistance (SphericCoordinate sCoordinate) {
-		return sCoordinate.doGetDistance(convertCartesianToSpheric(this));
+	public double getLongitude() {
+		return this.convertCartesianToSpheric().getLongitude();
 	}
+	
+	public double getRadius() {
+		return this.convertCartesianToSpheric().getRadius();
+	}
+	
+	
+	
 	
 	/**
 	 * Method that checks if two coordinate refer to the same place. If the distance between places is
@@ -114,21 +100,21 @@ public class CartesianCoordinate implements Coordinate{
 	}
 	
 	/**
-	 * 
+	 * @methodtype Conversion
 	 * @param coordinate
 	 * @return
 	 */
 	
-	public static SphericCoordinate convertCartesianToSpheric (CartesianCoordinate coordinate) {
-		double latitude = Math.atan2(coordinate.z, Math.sqrt(Math.pow(coordinate.getX(), 2) + 
-															 Math.pow(coordinate.getY(), 2)))
-															 * 180 / Math.PI;
+	public SphericCoordinate convertCartesianToSpheric () {
+		double latitude = Math.atan2(getZ(), Math.sqrt(Math.pow(getX(), 2) + 
+													   Math.pow(getY(), 2)))
+													   * 180 / Math.PI;
 		
-		double longitude = Math.atan2(coordinate.getY(), coordinate.getX()) * 180 / Math.PI;
+		double longitude = Math.atan2(getY(), getX()) * 180 / Math.PI;
 		
-		double radius = Math.sqrt(Math.pow(coordinate.getX(), 2) + 
-								  Math.pow(coordinate.getY(), 2) + 
-								  Math.pow(coordinate.getZ(),2));
+		double radius = Math.sqrt(Math.pow(getX(), 2) + 
+								  Math.pow(getY(), 2) + 
+								  Math.pow(getZ(), 2));
 		
 		return new SphericCoordinate(latitude, longitude, radius);
 	}
