@@ -2,20 +2,16 @@ package org.wahlzeit.model;
 
 public class SphericCoordinate extends AbstractCoordinate {
 	
-	//Attributes
 	private double latitude;
 	private double longitude;
 	private double radius;
 	
-	//Constructor
 	public SphericCoordinate (double latitude, double longitude, double radius) {
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
 		this.setRadius(radius);
 	}
-	
-	//Getters & Setters
-	
+		
 	/**
 	 * @methodtype get
 	 */
