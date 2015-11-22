@@ -28,9 +28,18 @@ public class FootballPhoto extends Photo {
 		super(id);
 	}
 	
+	/**
+	 * @methodtype Constructor
+	 */
 	public FootballPhoto (PhotoId id, Location location) {
-		this.id = id;
-		this.location = location;
+		super(id, location);
+	}
+	
+	/**
+	 * @methodtype Constructor
+	 */
+	public FootballPhoto (Location location) {
+		super(location);
 	}
 	
 	/**

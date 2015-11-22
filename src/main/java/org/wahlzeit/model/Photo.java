@@ -129,6 +129,10 @@ public class Photo extends DataObject {
 	public Location location;
 	
 	/**
+	 * @methodtype set
+	 */
+	
+	/**
 	 * 
 	 */
 	//TODO: change it to a single long
@@ -151,6 +155,18 @@ public class Photo extends DataObject {
 	public Photo(PhotoId myId) {
 		id = myId;
 
+		incWriteCount();
+	}
+	
+	public Photo (Location location) {
+		id = PhotoId.getNextId();
+		this.location = location;
+		incWriteCount();
+	}
+	
+	public Photo (PhotoId myId, Location location) {
+		id = myId;
+		this.location = location;
 		incWriteCount();
 	}
 

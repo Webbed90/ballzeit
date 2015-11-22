@@ -55,7 +55,7 @@ public abstract class PhotoFactory {
 	public static synchronized PhotoFactory getInstance() {
 		
 		if (instance == null) {
-			log.config(LogBuilder.createSystemMessage().addAction("Setting FootballPhotoFactory").toString());
+			log.config(LogBuilder.createSystemMessage().addAction("Setting generic PhotoFactory").toString());
 			setInstance(new FootballPhotoFactory());
 		}
 		return instance;
@@ -85,6 +85,23 @@ public abstract class PhotoFactory {
 	 */
 	public Photo createPhoto(PhotoId id) {
 		return new Photo(id);
+	}
+	
+	/**
+	 * @methodtype factory
+	 */
+	
+	public Photo createPhoto (Location location) {
+		return new Photo(location);
+	}
+
+	
+	/**
+	 * @methodtype factory
+	 */
+	
+	public Photo createPhoto (PhotoId id, Location location) {
+		return new Photo(id, location);
 	}
 
 	/**

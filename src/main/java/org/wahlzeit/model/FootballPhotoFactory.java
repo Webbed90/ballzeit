@@ -7,9 +7,11 @@ public class FootballPhotoFactory extends PhotoFactory {
 	
 	
 	private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());
+	
 	/**
-	 * Hidden singleton instance; needs to be initialized from the outside.
+	 * Hidden singleton instance; needs to be initialized from the outside. 
 	 */
+	
 	private static PhotoFactory instance = null;
 
 	/**
@@ -61,19 +63,6 @@ public class FootballPhotoFactory extends PhotoFactory {
 	 */
 	public FootballPhoto createFootballPhoto(PhotoId id, Location location) {
 		return new FootballPhoto(id, location);
-	}
-	
-	/**
-	 * @methodtype factory
-	 */
-	
-	public FootballPhoto createFootballPhoto(PhotoId id, String club, String name) {
-		FootballPhoto newFootballPhoto = new FootballPhoto(id);
-		newFootballPhoto.setClub(club);
-		newFootballPhoto.setPlayerName(name);
-		
-		return newFootballPhoto;
-		
 	}
 
 
