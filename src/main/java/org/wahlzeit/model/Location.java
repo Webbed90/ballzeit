@@ -1,4 +1,5 @@
 package org.wahlzeit.model;
+import com.googlecode.objectify.annotation.Container;
 import org.wahlzeit.services.DataObject;
 
 public class Location extends DataObject {
