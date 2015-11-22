@@ -101,7 +101,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	
 	public SphericCoordinate convertCartesianToSpheric () {
-				
+		
+		//preconditions
 		assertClassInvariants();
 		
 		
@@ -115,13 +116,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
 								  Math.pow(getY(), 2) + 
 								  Math.pow(getZ(), 2));
 		
+		SphericCoordinate convertedCoordinate = new SphericCoordinate(latitude, longitude, radius);
+		
 		//postconditions
-		assert (latitude <= 90 && latitude > -90);
-		assert (longitude <= 180 && longitude > 180);
+		convertedCoordinate.assertClassInvariants();
 		
-		assertClassInvariants();
+		return 	convertedCoordinate;
 		
-		return new SphericCoordinate(latitude, longitude, radius);
 	}
 
 

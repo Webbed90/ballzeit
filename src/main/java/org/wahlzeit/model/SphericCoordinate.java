@@ -95,6 +95,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype get
 	 */
 	public double getRadius() {
+		assertClassInvariants();
 		return radius;
 	}
 	
@@ -103,7 +104,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 
 	public void setRadius(double radius) {
+		assert (radius >= 0);
 		this.radius = radius;
+		assertClassInvariants();
+		
 	}
 	
 	/**
@@ -113,9 +117,12 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype boolean query method
 	 */
 	
-	public boolean isEqual (Coordinate coordinate) {
-		if (coordinate == null)
-			return false;
+	public boolean isEqual (SphericCoordinate coordinate) {
+		
+		//preconditions
+				assertClassInvariants();
+				coordinate.assertClassInvariants();
+				assertHasSameRadius(coordinate);
 		
 		if (this.getDistance(coordinate) <= 0.5) {
 			return true;
