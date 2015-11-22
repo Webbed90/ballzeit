@@ -32,20 +32,6 @@ public class FootballPhotoFactory extends PhotoFactory {
 	}
 
 	/**
-	 * Method to set the singleton instance of PhotoFactory.
-	 * 
-	 * @ methodtype set
-	 */
-	protected static synchronized void setInstance(PhotoFactory photoFactory) {
-		if (instance != null) {
-			throw new IllegalStateException(
-					"attempt to initalize PhotoFactory twice");
-		}
-
-		instance = photoFactory;
-	}
-
-	/**
 	 * @methodtype factory
 	 */
 	@Override
