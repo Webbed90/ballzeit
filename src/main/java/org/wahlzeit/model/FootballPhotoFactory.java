@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 public class FootballPhotoFactory extends PhotoFactory {
 	
+	
+	private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());
 	/**
 	 * Hidden singleton instance; needs to be initialized from the outside.
 	 */
@@ -16,6 +18,13 @@ public class FootballPhotoFactory extends PhotoFactory {
 	public FootballPhotoFactory() {
 		// nothing to do here ;)
 	}
+	
+    /**
+     * Hidden singleton instance; needs to be initialized from the outside.
+     */
+    public static void initialize() {
+        getInstance(); // drops result due to getInstance() side-effects
+    }
 
 	/**
 	 * Public singleton access method.
