@@ -152,6 +152,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		assert(!Double.isNaN(this.x));
 		assert(!Double.isNaN(this.y));
 		assert(!Double.isNaN(this.z));
+		assert (getRadius() >= 0);
+		assert (getLatitude() <= 90 && getLatitude() > -90);
+		assert (getLongitude() <= 180 && getLongitude() > -180);
 	}
 	
 	
