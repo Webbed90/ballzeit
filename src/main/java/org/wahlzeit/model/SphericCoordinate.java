@@ -7,9 +7,12 @@ public class SphericCoordinate extends AbstractCoordinate {
 	private double radius;
 	
 	public SphericCoordinate (double latitude, double longitude, double radius) {
-		this.setLatitude(latitude);
-		this.setLongitude(longitude);
-		this.setRadius(radius);
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.radius = radius;
+		
+		assertClassInvariants();
+		
 	}
 		
 	/**
@@ -17,6 +20,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 
 	public double getLatitude() {
+		assertClassInvariants();
 		return latitude;
 	}
 	
@@ -25,7 +29,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 
 	public void setLatitude(double latitude) {
-		latitudeValidityChecker(latitude);
+		assertLatitudeValidity(latitude);
 		this.latitude = latitude;
 	}
 	
@@ -34,6 +38,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 
 	public double getLongitude() {
+		assertClassInvariants();
 		return longitude;
 	}
 	
@@ -43,54 +48,18 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 
 	public void setLongitude(double longitude) {
-		longitudeValidityChecker(longitude);
+		//precondition
+		assertLongitudeValidity(longitude);
+		
 		this.longitude = longitude;
+				
+		assertClassInvariants();
 	}
 	
 	public SphericCoordinate getCoordinate() {
+		assertClassInvariants();
 		return this;
 	}
-	
-	//Methods
-	
-	/**
-	 * Method to get the longitudinal distance. Appreciates that you can travel
-	 * around a globe in two directions.
-	 */
-	
-	public double getLongitudinalDistance (SphericCoordinate coordinate){
-		//
-		return Math.min(
-				
-				(Math.abs(this.getLongitude()) + Math.abs(coordinate.getLongitude())),
-				(180-Math.abs(this.getLongitude())) + (180-Math.abs(coordinate.getLongitude())));
-	}
-	
-	/**
-	 * Method to get the latitudinal distance.
-	 */
-	
-	public double getLatitudinalDistance (SphericCoordinate coordinate) {
-		return Math.abs(this.latitude-coordinate.getLatitude());
-	}
-	
-	/**
-	 * Method that calculates the distance from longitudinal and latitudinal values.
-	 */
-	public SphericCoordinate getsimpleDistance (SphericCoordinate coordinate) {
-		
-		SphericCoordinate result = new SphericCoordinate(this.getLatitudinalDistance(coordinate), 
-										   this.getLongitudinalDistance(coordinate), this.getRadius());		
-		return result;
-	}
-	
-	/**
-	 * A method that determines which getDistanceMethod to use
-	 * @methodtype query
-	 * @methodproperity composed
-	 * 
-	 */
-	
 	
 	/**
 	 * A method that calculates the distance from longitude and latitude in meters
@@ -100,48 +69,26 @@ public class SphericCoordinate extends AbstractCoordinate {
 	
 	public double doGetDistance (SphericCoordinate coordinate) {
 		
-		if(this.radius < coordinate.getRadius()*0.995 || this.radius > coordinate.getRadius()*1.015) {
-			throw new IllegalArgumentException("Can't compare places on different planets!");
-		}
+		//preconditions
+		assertClassInvariants();
+		coordinate.assertClassInvariants();
+		assertHasSameRadius(coordinate);
 		
-		double radLatitudeThisPosition = asRadiant(this.latitude);
-		double radLongitudeThisPosition = asRadiant(this.longitude);
-		double radLatitudeOtherPosition = asRadiant(coordinate.getLatitude());
-		double radLongitudeOtherPosition = asRadiant(coordinate.getLongitude());
+		double radLatitudeThisPosition = Math.toRadians(this.latitude);
+		double radLongitudeThisPosition = Math.toRadians(this.longitude);
+		double radLatitudeOtherPosition = Math.toRadians(coordinate.getLatitude());
+		double radLongitudeOtherPosition = Math.toRadians(coordinate.getLongitude());
 		
-		return Math.acos(Math.sin(radLatitudeThisPosition)*Math.sin(radLatitudeOtherPosition) + 
-						 Math.cos(radLatitudeThisPosition)*Math.cos(radLatitudeOtherPosition) *
-						 Math.cos(radLongitudeOtherPosition-radLongitudeThisPosition))*radius;
-	}
-	
-	/**
-	 * Method to check if values to be entered in latitude are valid.
-	 */
-	
-	public void latitudeValidityChecker (double latitude)
-	{
-		if(latitude > 90 || latitude < -90) {
-			throw new IllegalArgumentException ("There are no Latitudes higher than 180.");
-		}
-	}
-	
-	/**
-	 * Method to check if values to be entered in longitude are valid.
-	 */
-	
-	public void longitudeValidityChecker (double longitude){
-		if(longitude >=180 || longitude < -180) {
-			throw new IllegalArgumentException ("THere are no Longitudes higher than 90.");
-		}
+		double distance = Math.acos(Math.sin(radLatitudeThisPosition)*Math.sin(radLatitudeOtherPosition) + 
+						  Math.cos(radLatitudeThisPosition)*Math.cos(radLatitudeOtherPosition) *
+						  Math.cos(radLongitudeOtherPosition-radLongitudeThisPosition))*radius;
 		
-	}
-	
-	/**
-	 * A method that converts decimal numbers to radians
-	 */
-	
-	public double asRadiant (double decimalNumber) {
-		return Math.PI*decimalNumber/180;
+		//postconditions
+		assertClassInvariants();
+		assert (distance <= Math.PI *this.getRadius() && distance >= 0);
+		
+		
+		return distance;
 	}
 
 	/**
@@ -177,37 +124,50 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return false;		
 	}
 	
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(latitude);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(longitude);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(radius);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
+	/**
+	 * @methodtype assert
+	 */
+	
+	protected void assertClassInvariants() {
+		assert (this != null);
+		assert (radius >= 0);
+		assert (latitude <= 90 && latitude > -90);
+		assert (longitude <= 180 && longitude > -180);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SphericCoordinate other = (SphericCoordinate) obj;
-		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
-			return false;
-		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
-			return false;
-		if (Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius))
-			return false;
-		return true;
+	
+	/**
+	 * Method to check if values to be entered in latitude are valid.
+	 * @methodtype assertion
+	 */
+	
+	public void assertLatitudeValidity (double latitude)
+	{
+		if(latitude >= 90 || latitude < -90) {
+			throw new IllegalArgumentException ("There are no Latitudes higher than 180.");
+		}
+	}
+	
+	/**
+	 * Method to check if values to be entered in longitude are valid.
+	 * @methodtype assertion
+	 */
+	
+	public void assertLongitudeValidity (double longitude){
+		if(longitude >=180 || longitude < -180) {
+			throw new IllegalArgumentException ("THere are no Longitudes higher than 90.");
+		}
+		
+	}
+	
+	/**
+	 * @methodtype assertion
+	 */
+	
+	public void assertHasSameRadius(Coordinate coordinate) throws IllegalArgumentException {
+		if(this.getRadius() < coordinate.getRadius()*0.995 || 
+		   this.getRadius() > coordinate.getRadius()*1.015) {
+			throw new IllegalArgumentException("Can't compare places on different planets!");
+		}
 	}
 
 

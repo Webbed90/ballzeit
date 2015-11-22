@@ -19,6 +19,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	
 	public double getX() {
+		assertClassInvariants();
 		return x;
 	}
 
@@ -27,7 +28,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	
 	void setX(double x) {
+		assert (!Double.isNaN(x));
 		this.x = x;
+		assertClassInvariants();
 	}
 
 	/**
@@ -35,6 +38,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	
 	public double getY() {
+		assertClassInvariants();
 		return y;
 	}
 
@@ -43,7 +47,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	
 	public void setY(double y) {
+		assert (!Double.isNaN(y));
 		this.y = y;
+		assertClassInvariants();
+
 	}
 
 	/**
@@ -51,6 +58,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	
 	double getZ() {
+		assertClassInvariants();
 		return z;
 	}
 
@@ -59,45 +67,32 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	
 	public void setZ(double z) {
+		assert (!Double.isNaN(z));
 		this.z = z;
+		assertClassInvariants();
 	}
 	
 	public SphericCoordinate getCoordinate() {
+		assertClassInvariants();
 		return this.convertCartesianToSpheric();
 	}
 	
 	public double getLatitude() {
+		assertClassInvariants();
 		return this.convertCartesianToSpheric().getLatitude();
 	}
 	
 	public double getLongitude() {
+		assertClassInvariants();
 		return this.convertCartesianToSpheric().getLongitude();
 	}
 	
 	public double getRadius() {
+		assertClassInvariants();
 		return this.convertCartesianToSpheric().getRadius();
 	}
 	
-	
-	
-	
-	/**
-	 * Method that checks if two coordinate refer to the same place. If the distance between places is
-	 * less than 0.5km, it returns true
-	 * 
-	 * @methodtype boolean query method
-	 */
-	
-	public boolean isEqual (Coordinate coordinate) {
-		if (coordinate == null)
-			return false;
-		
-		if (this.getDistance(coordinate) <= 0.5) {
-			return true;
-		}
-		
-		return false;		
-	}
+
 	
 	/**
 	 * @methodtype Conversion
@@ -106,6 +101,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	
 	public SphericCoordinate convertCartesianToSpheric () {
+				
+		assertClassInvariants();
+		
+		
 		double latitude = Math.atan2(getZ(), Math.sqrt(Math.pow(getX(), 2) + 
 													   Math.pow(getY(), 2)))
 													   * 180 / Math.PI;
@@ -116,43 +115,22 @@ public class CartesianCoordinate extends AbstractCoordinate {
 								  Math.pow(getY(), 2) + 
 								  Math.pow(getZ(), 2));
 		
+		//postconditions
+		assert (latitude <= 90 && latitude > -90);
+		assert (longitude <= 180 && longitude > 180);
+		
+		assertClassInvariants();
+		
 		return new SphericCoordinate(latitude, longitude, radius);
 	}
 
 
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(x);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(y);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(z);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CartesianCoordinate other = (CartesianCoordinate) obj;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
-			return false;
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-			return false;
-		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-			return false;
-		return true;
+	
+	protected void assertClassInvariants() {
+		assert (this != null);
+		assert(!Double.isNaN(this.x));
+		assert(!Double.isNaN(this.y));
+		assert(!Double.isNaN(this.z));
 	}
 	
 	
