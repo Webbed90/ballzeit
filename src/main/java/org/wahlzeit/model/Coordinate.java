@@ -20,6 +20,7 @@
 
 
 package org.wahlzeit.model;
+import org.wahlzeit.services.DataObject;
 
 /**
  * Created by Michael Weber on 24.10.2015
