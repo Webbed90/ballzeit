@@ -82,17 +82,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertClassInvariants();
 	}
 
-	/**
-	 * @methodtype assert
-	 */
-	
-	@Override
-	protected void assertClassInvariants() {
-		assert (this != null);
-		assert (radius >= 0);
-		assert (latitude <= 90 && latitude > -90);
-		assert (longitude <= 180 && longitude > -180);
-	}
 	
 	/**
 	 * Method to check if values to be entered in latitude are valid.
