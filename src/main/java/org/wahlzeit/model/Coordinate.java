@@ -40,7 +40,7 @@ interface Coordinate {
 	public double getLatitude();
 	public double getRadius();
 	
-	SphericCoordinate getCoordinate();
+	SphericCoordinate getSphericCoordinate();
 	
 
 }

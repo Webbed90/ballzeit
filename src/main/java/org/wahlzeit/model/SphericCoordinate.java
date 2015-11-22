@@ -43,57 +43,30 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 	
 	/**
-	 * 
-	 * @param longitude
+	 * @methodtype set
 	 */
 
 	public void setLongitude(double longitude) {
 		//precondition
 		assertLongitudeValidity(longitude);
-		
 		this.longitude = longitude;
-				
 		assertClassInvariants();
 	}
 	
-	public SphericCoordinate getCoordinate() {
+	/**
+	 * @methodtype get
+	 */
+	
+	public SphericCoordinate getSphericCoordinate() {
 		assertClassInvariants();
 		return this;
 	}
 	
-	/**
-	 * A method that calculates the distance from longitude and latitude in meters
-	 * @methodtype
-	 * @methodproperties 
-	 */
-	
-	public double doGetDistance (SphericCoordinate coordinate) {
-		
-		//preconditions
-		assertClassInvariants();
-		coordinate.assertClassInvariants();
-		assertHasSameRadius(coordinate);
-		
-		double radLatitudeThisPosition = Math.toRadians(this.latitude);
-		double radLongitudeThisPosition = Math.toRadians(this.longitude);
-		double radLatitudeOtherPosition = Math.toRadians(coordinate.getLatitude());
-		double radLongitudeOtherPosition = Math.toRadians(coordinate.getLongitude());
-		
-		double distance = Math.acos(Math.sin(radLatitudeThisPosition)*Math.sin(radLatitudeOtherPosition) + 
-						  Math.cos(radLatitudeThisPosition)*Math.cos(radLatitudeOtherPosition) *
-						  Math.cos(radLongitudeOtherPosition-radLongitudeThisPosition))*radius;
-		
-		//postconditions
-		assertClassInvariants();
-		assert (distance <= Math.PI *this.getRadius() && distance >= 0);
-		
-		
-		return distance;
-	}
 
 	/**
 	 * @methodtype get
 	 */
+	
 	public double getRadius() {
 		assertClassInvariants();
 		return radius;
@@ -107,34 +80,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assert (radius >= 0);
 		this.radius = radius;
 		assertClassInvariants();
-		
 	}
-	
-	/**
-	 * Method that checks if two coordinate refer to the same place. If the distance between places is
-	 * less than 0.5km, it returns true
-	 * 
-	 * @methodtype boolean query method
-	 */
-	
-	public boolean isEqual (SphericCoordinate coordinate) {
-		
-		//preconditions
-				assertClassInvariants();
-				coordinate.assertClassInvariants();
-				assertHasSameRadius(coordinate);
-		
-		if (this.getDistance(coordinate) <= 0.5) {
-			return true;
-		}
-		
-		return false;		
-	}
-	
+
 	/**
 	 * @methodtype assert
 	 */
 	
+	@Override
 	protected void assertClassInvariants() {
 		assert (this != null);
 		assert (radius >= 0);
@@ -150,7 +102,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	public void assertLatitudeValidity (double latitude)
 	{
 		if(latitude >= 90 || latitude < -90) {
-			throw new IllegalArgumentException ("There are no Latitudes higher than 180.");
+			throw new IllegalArgumentException ("There are no Latitudes higher than 90.");
 		}
 	}
 	
@@ -161,21 +113,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	
 	public void assertLongitudeValidity (double longitude){
 		if(longitude >=180 || longitude < -180) {
-			throw new IllegalArgumentException ("THere are no Longitudes higher than 90.");
+			throw new IllegalArgumentException ("THere are no Longitudes higher than 180.");
 		}
 		
 	}
-	
-	/**
-	 * @methodtype assertion
-	 */
-	
-	public void assertHasSameRadius(Coordinate coordinate) throws IllegalArgumentException {
-		if(this.getRadius() < coordinate.getRadius()*0.995 || 
-		   this.getRadius() > coordinate.getRadius()*1.015) {
-			throw new IllegalArgumentException("Can't compare places on different planets!");
-		}
-	}
-
 
 }

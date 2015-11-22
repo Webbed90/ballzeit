@@ -72,21 +72,41 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		assertClassInvariants();
 	}
 	
-	public SphericCoordinate getCoordinate() {
+	/**
+	 * @methodtype get
+	 */
+	
+	@Override
+	public SphericCoordinate getSphericCoordinate() {
 		assertClassInvariants();
 		return this.convertCartesianToSpheric();
 	}
 	
+	/**
+	 * @methodtype get
+	 */
+	
+	@Override
 	public double getLatitude() {
 		assertClassInvariants();
 		return this.convertCartesianToSpheric().getLatitude();
 	}
 	
+	/**
+	 * @methodtype get
+	 */
+	
+	@Override
 	public double getLongitude() {
 		assertClassInvariants();
 		return this.convertCartesianToSpheric().getLongitude();
 	}
 	
+	/**
+	 * @methodtype get
+	 */
+	
+	@Override
 	public double getRadius() {
 		assertClassInvariants();
 		return this.convertCartesianToSpheric().getRadius();
@@ -126,7 +146,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 
-	
+	@Override
 	protected void assertClassInvariants() {
 		assert (this != null);
 		assert(!Double.isNaN(this.x));
