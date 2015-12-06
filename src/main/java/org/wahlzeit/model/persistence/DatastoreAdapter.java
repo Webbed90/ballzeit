@@ -39,6 +39,7 @@ import java.util.logging.Logger;
  * 
  * @review
  */
+
 public class DatastoreAdapter extends ImageStorage {
 
 	private static final Logger log = Logger.getLogger(DatastoreAdapter.class.getName());

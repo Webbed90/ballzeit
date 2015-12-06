@@ -29,10 +29,19 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.logging.Logger;
-
+import org.wahlzeit.utils.Pattern;
 /**
  * A single-threaded Main class with database connection. Can be used by tools that don't want to start a server.
  */
+
+@Pattern(
+		name="Chain of Responsibility",
+		participants = {
+				"Client",  // Class contextInitalized in org.wahlzeit.apps sends a request to SetUp Wahlzeit and Calls startUp in ServiceMain
+				"Handler", // Abstract Main & ModelMain
+				"ConcreteHandler" //ServiceMain 
+		}
+)
 public abstract class ModelMain extends AbstractMain {
 
 	private static final Logger log = Logger.getLogger(ModelMain.class.getName());
@@ -40,6 +49,15 @@ public abstract class ModelMain extends AbstractMain {
 	/**
 	 *
 	 */
+	@Pattern(
+			name = "Strategy",
+			participants = {
+							"client" /*There are (or could be) different algorithmic solutions
+									   for the Image storage available. setInstance sets the
+									   strategy to use the DatastoreAdapter*/
+			}
+	)
+	
 	protected void startUp(String rootDir) throws Exception {
 		super.startUp(rootDir);
 		log.info("AbstractMain.startUp completed");

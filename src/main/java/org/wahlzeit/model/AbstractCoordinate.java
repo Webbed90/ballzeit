@@ -52,7 +52,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodproperties 
 	 */
 	
-	public double doGetDistance (SphericCoordinate coordinate) {
+	protected double doGetDistance (SphericCoordinate coordinate) {
 		
 		//preconditions
 		assertClassInvariants();

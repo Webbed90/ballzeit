@@ -76,7 +76,7 @@ public abstract class PhotoFactory {
 	 * @methodtype factory
 	 */
 	public Photo createPhoto() {
-		return new Photo();
+		return new FootballPhoto();
 	}
 	
 
@@ -84,7 +84,7 @@ public abstract class PhotoFactory {
 	 * Creates a new photo with the specified id
 	 */
 	public Photo createPhoto(PhotoId id) {
-		return new Photo(id);
+		return new FootballPhoto(id);
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public abstract class PhotoFactory {
 	 */
 	
 	public Photo createPhoto (Location location) {
-		return new Photo(location);
+		return new FootballPhoto(location);
 	}
 
 	
@@ -101,7 +101,7 @@ public abstract class PhotoFactory {
 	 */
 	
 	public Photo createPhoto (PhotoId id, Location location) {
-		return new Photo(id, location);
+		return new FootballPhoto(id, location);
 	}
 
 	/**

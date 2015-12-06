@@ -9,9 +9,17 @@ public class Location extends DataObject {
 	/**
 	 * @methodtype constructor
 	 */
-	public Location (String name, Coordinate coordinate) {
+	public Location () {
+		this.coordinates = new SphericCoordinate(0,0,0);
+	}
+	
+	
+	/**
+	 * @methodtype constructor
+	 */
+	public Location (String name) {
 		this.name = name;
-		this.coordinates = coordinate;
+		this.coordinates = new SphericCoordinate(0,0,0);
 	}
 	
 	/**

@@ -32,10 +32,21 @@ import org.wahlzeit.services.SysConfig;
 import org.wahlzeit.webparts.WebPartTemplateService;
 
 import java.util.logging.Logger;
-
+import org.wahlzeit.utils.Pattern;
 /**
  * A Main class that runs a Wahlzeit web server.
  */
+
+
+@Pattern(
+		name="Chain of Responsibility",
+		participants = {
+				"Client",  // Class contextInitalized in org.wahlzeit.apps sends a request to SetUp Wahlzeit and Calls startUp in ServiceMain
+				"Handler", // Abstract Main & ModelMain
+				"ConcreteHandler" //ServiceMain 
+		}
+)
+
 public class ServiceMain extends ModelMain {
 
 	private static final Logger log = Logger.getLogger(ServiceMain.class.getName());

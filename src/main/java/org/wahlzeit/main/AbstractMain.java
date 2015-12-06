@@ -23,10 +23,21 @@ package org.wahlzeit.main;
 import org.wahlzeit.services.SessionManager;
 import org.wahlzeit.services.SysConfig;
 import org.wahlzeit.services.SysSession;
+import org.wahlzeit.utils.Pattern;
 
 /**
  * A superclass for a Main class for system startup and shutdown.
  */
+
+@Pattern(
+		name="Chain of Responsibility",
+		participants = {
+				"Client",  // Class contextInitalized in org.wahlzeit.apps sends a request to SetUp Wahlzeit and Calls startUp in ServiceMain
+				"Handler", // Abstract Main & ModelMain
+				"ConcreteHandler" //ServiceMain 
+		}
+)
+
 public abstract class AbstractMain {
 
 	/**

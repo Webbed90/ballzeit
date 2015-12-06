@@ -25,6 +25,7 @@ import org.wahlzeit.model.GlobalsManager;
 import org.wahlzeit.services.SysConfig;
 
 import java.io.File;
+import org.wahlzeit.utils.Pattern;
 
 /**
  * Sets up a fresh clean Wahlzeit Flowers application database.
