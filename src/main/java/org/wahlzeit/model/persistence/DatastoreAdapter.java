@@ -28,6 +28,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.OfyService;
+import org.wahlzeit.utils.Pattern;
 
 import java.io.IOException;
 import java.io.Serializable;
