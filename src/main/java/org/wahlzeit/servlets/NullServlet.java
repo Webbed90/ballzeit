@@ -20,15 +20,23 @@
 
 package org.wahlzeit.servlets;
 
+import org.wahlzeit.utils.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 /**
  * A null servlet.
  */
+
+@Pattern(
+		name = "Null Object",
+		participants = {
+				"Null Object" //This Servlet
+		}
+		)
+
 public class NullServlet extends AbstractServlet {
 
 	/**

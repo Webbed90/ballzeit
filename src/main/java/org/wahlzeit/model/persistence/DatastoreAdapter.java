@@ -40,6 +40,16 @@ import java.util.logging.Logger;
  * @review
  */
 
+@Pattern(
+			name = "Adapter",
+			participants = {
+					"Adapter",  // The Datastore Adapter Class
+					"Adaptee",  // Ofy Service and thus the Google Datastore
+					"Client",   // Wahlzeit application and more specifically ModelMain
+					"Target",   // The ImageStorage Class
+			}
+)
+
 public class DatastoreAdapter extends ImageStorage {
 
 	private static final Logger log = Logger.getLogger(DatastoreAdapter.class.getName());
