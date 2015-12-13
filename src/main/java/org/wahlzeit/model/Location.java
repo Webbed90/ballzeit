@@ -56,6 +56,4 @@ public class Location extends DataObject {
 			return new CartesianCoordinate (latOrX, longOrY, radOrZ);
 	}
 	
-	
-
 }

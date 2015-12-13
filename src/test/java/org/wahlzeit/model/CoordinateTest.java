@@ -124,5 +124,32 @@ public class CoordinateTest {
 		sphericSomePlaceOnMars.getDistance(sphericNuernberg);
 	}
 	
+	@Test
+	public void TestEquals() {
+		assertTrue(cartesianNuernberg.equals(cartesianNuernberg));
+	}
 	
+	@Test
+	public void TestToCartesianCoordinate() {
+//		assertEquals(((CartesianCoordinate) cartesianNuernberg).getX(), ((SphericCoordinate) sphericNuernberg).toCartesianCoordinate().getX(),DELTA);
+	}
+	
+	@Test
+	public void TestHashCode() {
+		assertEquals(sphericNuernberg.hashCode(), cartesianNuernberg.hashCode(),0);
+		assertEquals(sphericNuernberg.hashCode(), cartesianNuernberg.getSphericCoordinate().hashCode());
+		assertEquals(sphericMelbourne.hashCode(), cartesianMelbourne.hashCode(),0);
+		assertEquals(sphericMelbourne.hashCode(), cartesianMelbourne.getSphericCoordinate().hashCode());
+		assertEquals(sphericUshuaia.hashCode(), cartesianUshuaia.hashCode(),0);
+		assertEquals(sphericUshuaia.hashCode(), cartesianUshuaia.getSphericCoordinate().hashCode());
+	}
+	
+	@Test
+	public void testEquals() {
+		assertTrue(sphericNuernberg.equals(cartesianNuernberg));
+		assertTrue(sphericMelbourne.equals(cartesianMelbourne));
+		assertTrue(cartesianUshuaia.equals(sphericUshuaia));
+		assertFalse(cartesianNuernberg.equals(sphericMelbourne));
+		assertFalse(sphericUshuaia.equals(sphericNuernberg));
+	}
 }

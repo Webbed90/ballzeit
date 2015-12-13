@@ -1,36 +1,33 @@
 package org.wahlzeit.model;
 
 public class CartesianCoordinate extends AbstractCoordinate {
-	private double x;
-	private double y;
-	private double z;
+	private final double X;
+	private final double Y;
+	private final double Z;
 	
 	
 	public CartesianCoordinate (double x, double y, double z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.X = x;
+		this.Y = y;
+		this.Z = z;
 	}
 	
-
-
 	/**
 	 * @methodtype get
 	 */
 	
 	public double getX() {
 		assertClassInvariants();
-		return x;
+		return X;
 	}
 
 	/**
 	 * @methodtype set
 	 */
 	
-	void setX(double x) {
+	public CartesianCoordinate setX(double x) {
 		assert (!Double.isNaN(x));
-		this.x = x;
-		assertClassInvariants();
+		return new CartesianCoordinate(x, this.Y, this.Z);
 	}
 
 	/**
@@ -39,17 +36,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	
 	public double getY() {
 		assertClassInvariants();
-		return y;
+		return Y;
 	}
 
 	/**
 	 * @methodtype set
 	 */
 	
-	public void setY(double y) {
+	public CartesianCoordinate setY(double y) {
 		assert (!Double.isNaN(y));
-		this.y = y;
-		assertClassInvariants();
+		return new CartesianCoordinate(this.X, y, this.Z);
 
 	}
 
@@ -59,21 +55,20 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	
 	double getZ() {
 		assertClassInvariants();
-		return z;
+		return Z;
 	}
 
 	/**
 	 * @methodtype set
 	 */
 	
-	public void setZ(double z) {
+	public CartesianCoordinate setZ(double z) {
 		assert (!Double.isNaN(z));
-		this.z = z;
-		assertClassInvariants();
+		return new CartesianCoordinate(this.X,this.Y,z);
 	}
 	
 	/**
-	 * @methodtype get
+	 * @methodtype conversion
 	 */
 	
 	@Override
@@ -81,57 +76,22 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		assertClassInvariants();
 		return this.convertCartesianToSpheric();
 	}
-	
-	/**
-	 * @methodtype get
-	 */
-	
-	@Override
-	public double getLatitude() {
-		assertClassInvariants();
-		return this.convertCartesianToSpheric().getLatitude();
-	}
-	
-	/**
-	 * @methodtype get
-	 */
-	
-	@Override
-	public double getLongitude() {
-		assertClassInvariants();
-		return this.convertCartesianToSpheric().getLongitude();
-	}
-	
-	/**
-	 * @methodtype get
-	 */
-	
-	@Override
-	public double getRadius() {
-		assertClassInvariants();
-		return this.convertCartesianToSpheric().getRadius();
-	}
-	
 
-	
 	/**
 	 * @methodtype Conversion
 	 * @param coordinate
 	 * @return
 	 */
 	
-	public SphericCoordinate convertCartesianToSpheric () {
+	private SphericCoordinate convertCartesianToSpheric () {
 		
 		//preconditions
 		assertClassInvariants();
 		
-		
 		double latitude = Math.atan2(getZ(), Math.sqrt(Math.pow(getX(), 2) + 
 													   Math.pow(getY(), 2)))
 													   * 180 / Math.PI;
-		
 		double longitude = Math.atan2(getY(), getX()) * 180 / Math.PI;
-		
 		double radius = Math.sqrt(Math.pow(getX(), 2) + 
 								  Math.pow(getY(), 2) + 
 								  Math.pow(getZ(), 2));
@@ -149,9 +109,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	@Override
 	protected void assertClassInvariants() {
 		assert (this != null);
-		assert(!Double.isNaN(this.x));
-		assert(!Double.isNaN(this.y));
-		assert(!Double.isNaN(this.z));
+		assert(!Double.isNaN(this.X));
+		assert(!Double.isNaN(this.Y));
+		assert(!Double.isNaN(this.Z));
 		assert (getRadius() >= 0);
 		assert (getLatitude() <= 90 && getLatitude() > -90);
 		assert (getLongitude() <= 180 && getLongitude() > -180);

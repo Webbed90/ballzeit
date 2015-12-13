@@ -2,14 +2,14 @@ package org.wahlzeit.model;
 
 public class SphericCoordinate extends AbstractCoordinate {
 	
-	private double latitude;
-	private double longitude;
-	private double radius;
+	private final double LATITUDE;
+	private final double LONGITUDE;
+	private final double RADIUS;
 	
 	public SphericCoordinate (double latitude, double longitude, double radius) {
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.radius = radius;
+		this.LATITUDE = latitude;
+		this.LONGITUDE = longitude;
+		this.RADIUS = radius;
 		
 		assertClassInvariants();
 		
@@ -18,45 +18,44 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype get
 	 */
-
+	@Override
 	public double getLatitude() {
 		assertClassInvariants();
-		return latitude;
+		return LATITUDE;
 	}
 	
 	/**
 	 * @methodtype set
 	 */
 
-	public void setLatitude(double latitude) {
+	public SphericCoordinate setLatitude(double latitude) {
 		assertLatitudeValidity(latitude);
-		this.latitude = latitude;
+		return new SphericCoordinate(latitude, this.LONGITUDE, this.RADIUS);
 	}
 	
 	/**
 	 * @methodtype get
 	 */
-
+	@Override
 	public double getLongitude() {
 		assertClassInvariants();
-		return longitude;
+		return LONGITUDE;
 	}
 	
 	/**
 	 * @methodtype set
 	 */
 
-	public void setLongitude(double longitude) {
+	public SphericCoordinate setLongitude(double longitude) {
 		//precondition
 		assertLongitudeValidity(longitude);
-		this.longitude = longitude;
-		assertClassInvariants();
+		return new SphericCoordinate(this.LATITUDE, longitude, this.RADIUS);
 	}
 	
 	/**
 	 * @methodtype get
 	 */
-	
+	@Override
 	public SphericCoordinate getSphericCoordinate() {
 		assertClassInvariants();
 		return this;
@@ -66,23 +65,22 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype get
 	 */
-	
+	@Override
 	public double getRadius() {
 		assertClassInvariants();
-		return radius;
+		return RADIUS;
 	}
 	
 	/**
 	 * @methodtype set
 	 */
 
-	public void setRadius(double radius) {
+	public SphericCoordinate setRadius(double radius) {
 		assert (radius >= 0);
-		this.radius = radius;
-		assertClassInvariants();
+		return new SphericCoordinate(this.LATITUDE, this.LONGITUDE, radius);
 	}
 
-	
+
 	/**
 	 * Method to check if values to be entered in latitude are valid.
 	 * @methodtype assertion
@@ -103,8 +101,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 	public void assertLongitudeValidity (double longitude){
 		if(longitude >=180 || longitude < -180) {
 			throw new IllegalArgumentException ("THere are no Longitudes higher than 180.");
-		}
-		
+		}		
 	}
-
 }
