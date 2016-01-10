@@ -77,6 +77,9 @@ public abstract class ModelMain extends AbstractMain {
 
 		log.config(LogBuilder.createSystemMessage().addAction("load Photos").toString());
 		PhotoManager.getInstance().init();
+		
+		log.config(LogBuilder.createSystemMessage().addAction("load Players").toString());
+		FootballPlayerManager.getInstance();
 	}
 
 

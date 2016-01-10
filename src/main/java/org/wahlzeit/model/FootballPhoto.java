@@ -4,7 +4,7 @@ public class FootballPhoto extends Photo {
 	
 	private String club;
 	private int birthyear;
-	private String playerName;
+	private FootballPlayer player;
 	private boolean isActive;
 	private String nationality;
 	private int scoredGoals;
@@ -40,6 +40,13 @@ public class FootballPhoto extends Photo {
 	 */
 	public FootballPhoto (Location location) {
 		super(location);
+	}
+	
+	/**
+	 * @methodtype Constructor
+	 */
+	public FootballPhoto (FootballPlayer player) {
+		this.player = player;
 	}
 	
 	/**
@@ -94,16 +101,16 @@ public class FootballPhoto extends Photo {
 	 * @methodtype get
 	 */
 
-	public String getPlayerName() {
-		return playerName;
+	public FootballPlayer getPlayer() {
+		return player;
 	}
 	
 	/**
 	 * @methodtype set
 	 */
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
+	public void setPlayerName(FootballPlayer player) {
+		this.player = player;
 	}
 	
 	/**
